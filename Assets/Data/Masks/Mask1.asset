@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2b97c9e55559e2f9e20b65e2049b67, type: 3}
+  m_Name: Mask1
+  m_EditorClassIdentifier: 
+  maskJson: {fileID: 4900000, guid: 7286190a5a62febff9c2447730842233, type: 3}
+  masks:
+  - {fileID: 2800000, guid: 43d596819bcc790779c081e0cf0af69f, type: 3}
+  - {fileID: 2800000, guid: 812cdbba2d121856183e53bab5ed9df2, type: 3}
+  - {fileID: 2800000, guid: ab4713a6f9742d60fa58ff20d28a533e, type: 3}
+  - {fileID: 2800000, guid: 55480420d35da3698ace21867c558262, type: 3}
