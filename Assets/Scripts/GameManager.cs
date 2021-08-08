@@ -10,8 +10,16 @@ namespace PuzzleTest
 
 
 
+        public static Stack<int> TutorialTileIndexList { get; private set; } = new Stack<int>(new[] { 0, 2, 1, 1});
+        [SerializeField] private bool _isTutorial = true;
+        public static bool IsTutorial {
+            get => _gameManagerInstance._isTutorial;
+            set => _gameManagerInstance._isTutorial = value;
+        }
+
         private static Dictionary<GameStateTypes, IState> states;
         private static GameStateTypes _gameStateType;
+        [SerializeField] private TutorialScreenStage _tutorialStage;
         [SerializeField] private GameScreenStage _gameStage;
         [SerializeField] private CongratulationScreenStage _congratulationStage;
         private static IState _currentScreenState;
@@ -40,6 +48,7 @@ namespace PuzzleTest
 
             states = new Dictionary<GameStateTypes, IState>();
             states.Add(GameStateTypes.MAIN_MENU, null);
+            states.Add(GameStateTypes.TUTORIAL, _tutorialStage);
             states.Add(GameStateTypes.LOADING, new LoadingScreenStage());
             states.Add(GameStateTypes.CREATE_LEVEL, null);
             states.Add(GameStateTypes.PLAY, _gameStage);

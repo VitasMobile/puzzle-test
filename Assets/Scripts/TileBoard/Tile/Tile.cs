@@ -91,6 +91,48 @@ namespace PuzzleTest
             _correctPosition = position;
         }
 
+        internal void StartDrag(Vector2 position)
+        {
+            if (Application.isPlaying)
+            {
+                if (_spriteRenderer == null)
+                {
+                    _spriteRenderer = GetComponent<SpriteRenderer>();
+                }
+                _prevSortingOrder = _spriteRenderer.sortingOrder;
+                _spriteRenderer.sortingOrder = 10;
+
+                Color color = _spriteRenderer.color;
+                color.a = 0.8f;
+                _spriteRenderer.color = color;
+
+                transform.localScale = Vector3.one;
+                _dragOffset = Vector2.zero;
+            }
+        }
+
+        internal void UpdateDrag(Vector2 position)
+        {
+            transform.position = position + _dragOffset;
+        }
+
+        internal void EndDrag()
+        {
+            if (IsCorrect())
+            {
+                ResetSprite();
+
+                transform.position = _correctPosition;
+                _collider.enabled = false;
+
+                SetState(TileStateType.DONE);
+            }
+            else
+            {
+                Fly(Vector2.zero, Vector2.one * 0.5f);
+            }
+        }
+
         // PRIVATE FUNCTIONS
         private bool IsCorrect()
         {
@@ -108,38 +150,20 @@ namespace PuzzleTest
         // CALLBACK FUNCTIONS
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _prevSortingOrder = _spriteRenderer.sortingOrder;
-            _spriteRenderer.sortingOrder = 10;
-
-            Color color = _spriteRenderer.color;
-            color.a = 0.8f;
-            _spriteRenderer.color = color;
-
-            transform.localScale = Vector3.one;
-            _dragOffset = ((Vector2)transform.position - (Vector2)_mainCamera.ScreenToWorldPoint(Input.mousePosition));
+            Vector2 position = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            StartDrag(position);
+            _dragOffset = ((Vector2)transform.position - position);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             Vector2 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = mousePosition + _dragOffset;
+            UpdateDrag(mousePosition);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (IsCorrect())
-            {
-                ResetSprite();
-
-                transform.position = _correctPosition;
-                _collider.enabled = false;
-
-                SetState(TileStateType.DONE);
-            }
-            else
-            {
-                Fly(Vector2.zero, Vector2.one * 0.5f);
-            }
+            EndDrag();
         }
     }
 }

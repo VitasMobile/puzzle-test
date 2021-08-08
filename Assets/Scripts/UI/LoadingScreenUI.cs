@@ -39,7 +39,14 @@ namespace PuzzleTest
 
         private void AnHandle_HideCompleted()
         {
-            GameManager.SetState(GameStateTypes.PLAY);
+            if (GameManager.IsTutorial)
+            {
+                GameManager.SetState(GameStateTypes.TUTORIAL);
+            }
+            else
+            {
+                GameManager.SetState(GameStateTypes.PLAY);
+            }
             gameObject.SetActive(false);
         }
     }

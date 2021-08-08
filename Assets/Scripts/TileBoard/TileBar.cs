@@ -17,6 +17,21 @@ namespace PuzzleTest
 
 
         // Public Functions
+        public Tile GetTileByIndex(int index)
+        {
+            if (index >= transform.childCount)
+            {
+                return null;
+            }
+            Transform cell = transform.GetChild(index);
+            if (cell.childCount == 0)
+            {
+                return null;
+            }
+            Tile tile = cell.GetChild(0).GetComponent<Tile>();
+            return tile;
+        }
+
         public void UpdateTileBar()
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -71,7 +86,16 @@ namespace PuzzleTest
         // Private Functions
         private Tile GetFreeTile()
         {
-            Tile tile = GameManager.TilePool.GetRndFreeTile();
+            Tile tile;
+            if (GameManager.IsTutorial && GameManager.TutorialTileIndexList.Count > 0)
+            {
+                tile = GameManager.TilePool.GetTileByIndex(GameManager.TutorialTileIndexList.Pop());
+            }
+            else
+            {
+                tile = GameManager.TilePool.GetRndFreeTile();
+            }
+
             if (tile)
             {
                 tile.gameObject.SetActive(true);

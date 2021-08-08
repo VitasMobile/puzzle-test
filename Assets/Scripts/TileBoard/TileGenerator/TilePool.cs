@@ -28,11 +28,16 @@ namespace PuzzleTest
 
         public Tile GetRndFreeTile()
         {
-            if (_tiles.Count > 0)
+            int rndIndex = Random.Range(0, _tiles.Count);
+            return GetTileByIndex(rndIndex);
+        }
+
+        public Tile GetTileByIndex(int index)
+        {
+            if (_tiles.Count > 0 && index < _tiles.Count)
             {
-                int rndIndex = Random.Range(0, _tiles.Count);
-                Tile tile = _tiles[rndIndex];
-                _tiles.RemoveAt(rndIndex);
+                Tile tile = _tiles[index];
+                _tiles.RemoveAt(index);
                 return tile;
             }
 

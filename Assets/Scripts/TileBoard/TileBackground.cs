@@ -23,6 +23,7 @@ namespace PuzzleTest
             switch (gameStateType)
             {
                 case GameStateTypes.PLAY:
+                case GameStateTypes.TUTORIAL:
                     SetBackgroundTransparent(0.2f);
                     break;
 

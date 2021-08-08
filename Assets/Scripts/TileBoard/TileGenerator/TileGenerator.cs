@@ -38,10 +38,18 @@ namespace PuzzleTest
         // Public Functions
         public void GenerateNewLevel()
         {
-            _picture = GetRndPicture();
-            _tileBackground.SetBackground(_picture);
+            if (GameManager.IsTutorial)
+            {
+                _picture = _pictures[0];
+                _currentMask = _masks[1];
+            }
+            else
+            {
+                _picture = GetRndPicture();
+                _currentMask = GetRndMask();
+            }
 
-            _currentMask = GetRndMask();
+            _tileBackground.SetBackground(_picture);
 
             StartCoroutine(GenerateTiles());
         }
